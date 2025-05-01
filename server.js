@@ -9,6 +9,11 @@ app.use(cors({
     credentials: true
 }));
 
+// Add a test route
+app.get('/', (req, res) => {
+    res.send('Backend server is running!');
+});
+
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
@@ -41,6 +46,8 @@ const logActiveUsers = () => {
 
 io.on('connection', (socket) => {
     console.log('New client connected:', socket.id);
+    console.log('Connection headers:', socket.handshake.headers);
+    console.log('Connection query:', socket.handshake.query);
 
     // Send current canvas state to new user
     socket.emit('canvas-state', canvasData.main);
@@ -132,4 +139,6 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`WebSocket server running on port ${PORT}`);
+    console.log('Environment:', process.env.NODE_ENV);
+    console.log('CORS origins:', ["https://zhasik16.github.io", "http://localhost:3000"]);
 }); 
