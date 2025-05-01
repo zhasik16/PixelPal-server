@@ -4,7 +4,10 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ["https://zhasik16.github.io", "http://localhost:3000"],
+    credentials: true
+}));
 
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -127,6 +130,6 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`WebSocket server running on port ${PORT}`);
 }); 
