@@ -9,8 +9,9 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: "*", // Allow all origins in production
-        methods: ["GET", "POST"]
+        origin: ["https://zhasik16.github.io", "http://localhost:3000"],
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
